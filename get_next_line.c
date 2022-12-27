@@ -6,7 +6,7 @@
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 12:11:19 by bkiziler          #+#    #+#             */
-/*   Updated: 2022/12/27 14:15:03 by bkiziler         ###   ########.fr       */
+/*   Updated: 2022/12/27 19:35:08 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	*apart_nl(char * red)
 		a = (ft_strlen(red) - ft_strlen(ft_strchr(red, '\n') + 1));
 		stret = ft_substr(red, 0, a);
 	}
-	return(stret);
+	free(red);
+	return (stret);
 
 }
 
@@ -64,23 +65,11 @@ char	*get_next_line(int fd)
 			free(str);
 			return(0);
 		}
+		str[eof] = '\0';
 		red = ft_strjoin(red, str);
 	}
-	system("leaks a.out");
 	free(str);
 	str = apart_nl(red);
 	red = trim(red);
 	return (str);
 }
-
-/*
-#include <stdio.h>
-#include <fcntl.h>
-int main()
-{
-	int fd;
-	fd = open("deneme.txt", O_RDWR);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-}
-*/

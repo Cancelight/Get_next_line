@@ -4,7 +4,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 1
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 char	*get_next_line(int fd);
 int		ft_strlen(char *ptr);

@@ -6,7 +6,7 @@
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:26 by bkiziler          #+#    #+#             */
-/*   Updated: 2022/12/27 14:08:21 by bkiziler         ###   ########.fr       */
+/*   Updated: 2022/12/27 19:14:05 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*ft_substr(char *s, unsigned int start, unsigned int len)
 	ptr = malloc((len + 1) * sizeof(char));
 	if (!ptr)
 		return (0);
-	ptr[len] = 0;
 	while (i < len)
 		ptr[i++] = s[start++];
+	ptr[len] = '\0';
 	return (ptr);
 }
 
@@ -76,8 +76,8 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ptr;
 	int i;
+	
 	i = -1;
-
 	if (!s1)
 	{
 		s1 = malloc(1 * sizeof(char));
