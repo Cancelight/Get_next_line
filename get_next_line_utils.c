@@ -6,18 +6,18 @@
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:26 by bkiziler          #+#    #+#             */
-/*   Updated: 2022/12/27 19:14:05 by bkiziler         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:36:54 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *ptr)
+unsigned int	ft_strlen(char *ptr)
 {
-	int count;
+	unsigned int	count;
 
 	count = 0;
-	if(!ptr)
+	if (!ptr)
 		return (0);
 	while (ptr[count] != '\0')
 		count++;
@@ -26,34 +26,25 @@ int	ft_strlen(char *ptr)
 
 char	*ft_strchr(char *s, int c)
 {
-	while (*s)
-	{
-		if (*s == (char)c)
-			return (s);
-		s++;
-	}
-	return (0);
-}
-
-int	ft_chrcheck(char *s, int c)
-{
 	int	i;
 
 	i = 0;
-	while (s[i])
+	if (!s)
+		return (NULL);
+	while (s[i] != '\0')
 	{
-		if (s[i] == (char)c)
-			return (1);
+		if (s[i] == c)
+			return ((char *)s + i);
 		i++;
 	}
-	if (((char *)s)[i] == (char)c)
-		return(1);
-	return (0);
+	if (s[i] == c)
+		return ((char *)s + i);
+	return (NULL);
 }
 
 char	*ft_substr(char *s, unsigned int start, unsigned int len)
 {
-	char	*ptr;
+	char			*ptr;
 	unsigned int	i;
 
 	if (!s)
@@ -75,8 +66,8 @@ char	*ft_substr(char *s, unsigned int start, unsigned int len)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ptr;
-	int i;
-	
+	int		i;
+
 	i = -1;
 	if (!s1)
 	{
@@ -86,37 +77,24 @@ char	*ft_strjoin(char *s1, char *s2)
 	ptr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (ptr == NULL)
 		return (NULL);
-	while(s1 && s1[++i] != '\0')
+	while (s1 && s1[++i] != '\0')
 		ptr[i] = s1[i];
-	while(s2 && *s2 != '\0')
+	while (s2 && *s2 != '\0')
 		ptr[i++] = *s2++;
 	ptr[i] = '\0';
 	free(s1);
 	return (ptr);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strdup(char *s1)
 {
-	void	*ptr;
+	char	*cp;
 
-	ptr = malloc(count * size);
-	if (ptr == NULL)
+	cp = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (cp == NULL)
 		return (0);
-	ft_memset(ptr, 0, (size * count));
-	return (ptr);
-}
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	u;
-	size_t			i;
-
-	u = c;
-	i = 0;
-	while (i < len)
-	{
-		((unsigned char *)b)[i] = u;
-		i++;
-	}
-	return (b);
+	while (*s1)
+		*cp++ = *s1++;
+	*cp = '\0';
+	return (cp);
 }

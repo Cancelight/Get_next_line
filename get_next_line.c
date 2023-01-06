@@ -5,71 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/26 12:11:19 by bkiziler          #+#    #+#             */
-/*   Updated: 2022/12/27 19:35:08 by bkiziler         ###   ########.fr       */
+/*   Created: 2022/12/30 14:38:39 by bkiziler          #+#    #+#             */
+/*   Updated: 2022/12/30 14:43:50 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *trim(char *red)
-{
-	char *temp;
-	int len;
-
-	if(ft_chrcheck(red, '\n'))
-	{
-		len = ft_strlen(red) - ft_strlen(ft_strchr(red, '\n') + 1);
-		temp = ft_substr(red, len, ft_strlen(ft_strchr(red, '\n')));
-		free(red);
-		red = malloc(sizeof(char) * ft_strlen(temp));
-		red = ft_substr(temp, 0, ft_strlen(temp));
-		free(temp);
-	}
-	return (red);
-}
-
-char	*apart_nl(char * red)
-{
-	int a ;
-	char *stret;
-
-	if (!red)
-		return (NULL);
-	if (*red)
-	{
-		a = (ft_strlen(red) - ft_strlen(ft_strchr(red, '\n') + 1));
-		stret = ft_substr(red, 0, a);
-	}
-	free(red);
-	return (stret);
-
-}
-
 char	*get_next_line(int fd)
 {
-	char *str;
-	int eof;
-	static char *red;
+	static char	*red;
+	char		*str;
 
-	str = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if(!str || fd < 0 || BUFFER_SIZE <= 0)
-		return(0);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	red = read_function(fd, red);
+	if (!red)
+		return (NULL);
+	str = apart_line(red);
+	red = trim(red);
+	return (str);
+}
+
+char	*trim(char *red)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	while (red[i] && red[i] != '\n')
+		i++;
+	if (!red[i])
+	{
+		free(red);
+		return (NULL);
+	}
+	i++;
+	temp = ft_substr(red, i, (ft_strlen(red) - i));
+	if (!temp)
+		return (NULL);
+	free(red);
+	return (temp);
+}
+
+char	*apart_line(char *red)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	if (!*(red + i))
+		return (NULL);
+	while (red[i] != '\n' && red[i] != '\0')
+		i++;
+	if (red[i] == '\n')
+		str = ft_substr(red, 0, i + 1);
+	else
+		str = ft_substr(red, 0, i);
+	if (!str)
+		return (NULL);
+	return (str);
+}
+
+char	*read_function(int fd, char *red)
+{
+	char	*str;
+	int		eof;
+
+	str = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
 	eof = 1;
-	while(!ft_chrcheck(str, '\n') && eof)
+	while (!ft_strchr(red, '\n') && eof != 0)
 	{
 		eof = read(fd, str, BUFFER_SIZE);
-		if(eof == -1)
+		if (eof == -1)
 		{
-			free(red);
 			free(str);
-			return(0);
+			free(red);
+			return (NULL);
 		}
 		str[eof] = '\0';
 		red = ft_strjoin(red, str);
 	}
 	free(str);
-	str = apart_nl(red);
-	red = trim(red);
-	return (str);
+	return (red);
 }

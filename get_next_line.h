@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 15:37:05 by bkiziler          #+#    #+#             */
+/*   Updated: 2023/01/02 11:03:23 by bkiziler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -5,22 +17,18 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
-char	*get_next_line(int fd);
-int		ft_strlen(char *ptr);
-char	*ft_strchr(char *s, int c);
-char	*ft_strdup(char *buf);
-void	*ft_calloc(size_t count, size_t size);
-int		ft_chrcheck(char *s, int c);
-char	*ft_substr(char *s, unsigned int start, unsigned int len);
-char	*ft_strjoin(char *s1, char *s2);
-size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
-size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
-void	ft_putstr(char *s);
-char	*trim(char *red);
-char	*apart_nl(char * red);
-void	*ft_memset(void *b, int c, size_t len);
+char			*get_next_line(int fd);
+unsigned int	ft_strlen(char *ptr);
+char			*ft_strchr(char *s, int c);
+char			*ft_strdup(char *s1);
+int				ft_chrcheck(char *s, int c);
+char			*ft_substr(char *s, unsigned int start, unsigned int len);
+char			*ft_strjoin(char *s1, char *s2);
+char			*trim(char *red);
+char			*apart_line(char *red);
+char			*read_function(int fd, char *red);
 
 #endif
