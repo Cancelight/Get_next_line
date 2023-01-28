@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 14:38:39 by bkiziler          #+#    #+#             */
-/*   Updated: 2023/01/28 18:07:36 by bkiziler         ###   ########.fr       */
+/*   Created: 2023/01/28 14:37:04 by bkiziler          #+#    #+#             */
+/*   Updated: 2023/01/28 16:03:54 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*red;
+	static char	*red[256];
 	char		*str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	red = read_function(fd, red);
-	if (!red)
+	red[fd] = read_function(fd, red[fd]);
+	if (!red[fd])
 		return (NULL);
-	str = apart_line(red);
-	red = trim(red);
+	str = apart_line(red[fd]);
+	red[fd] = trim(red[fd]);
 	return (str);
 }
 
