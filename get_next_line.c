@@ -6,7 +6,7 @@
 /*   By: bkiziler <bkiziler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:38:39 by bkiziler          #+#    #+#             */
-/*   Updated: 2023/02/01 14:33:55 by bkiziler         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:08:12 by bkiziler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,4 @@ char	*read_function(int fd, char *red)
 	}
 	free(str);
 	return (red);
-}
-#include <stdio.h>
-#include <fcntl.h>
-int main()
-{
-	char * result;
-	int fd = open("get_next_line.c", O_RDWR, 0777);
-	result = (get_next_line(fd));
-	while(result)
-	{
-		printf("%s", result);
-		free(result);
-		result = (get_next_line(fd));
-	}
-	system("leaks a.out");
 }
